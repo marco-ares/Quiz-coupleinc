@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz Couple inc. (prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   COUPLE INC. — PROTOTYPE DE QUIZ
+   Socle dark premium Ax-One, accent rose Couple inc.
+   Contenu de test. Tout se remplace dans le bloc CONFIGURATION.
+   ============================================================ */
+
+:root{
+  --noir:      #191B21;
+  --fond:      #23242C;
+  --surface:   #31323D;
+  --rose:      #B05C7A;
+  --rose-vif:  #CE8AA3;
+  --gris:      #A8B2B8;
+  --gris-pale: #D8DFE5;
+  --blanc:     #F2F6F7;
+
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  --r: 16px;
+  --ombre: 0 1px 2px rgba(0,0,0,.3), 0 18px 44px rgba(0,0,0,.36);
+  --trait: rgba(255,255,255,.09);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:var(--sans);
+  background:var(--fond);
+  color:var(--blanc);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.6;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+body::before{
+  content:"";
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(900px 620px at 12% -8%, rgba(176,92,122,.16) 0%, transparent 62%),
+    radial-gradient(820px 700px at 105% 105%, rgba(49,50,61,.9) 0%, transparent 58%),
+    linear-gradient(180deg, #23242C 0%, #191B21 100%);
+}
+
+.badge-test{
+  position:fixed; top:12px; right:12px; z-index:50;
+  background:rgba(255,255,255,.1); color:var(--blanc);
+  border:1px solid var(--trait);
+  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+  padding:6px 12px; border-radius:999px;
+}
+
+.wrap{
+  width:100%; max-width:680px;
+  margin:0 auto; padding:32px 24px 64px;
+  flex:1;
+  display:flex; flex-direction:column; justify-content:center;
+}
+
+.logo{
+  font-family:var(--serif); font-size:1.7rem; font-weight:500;
+  color:var(--rose-vif); letter-spacing:-.01em;
+  text-align:center; margin-bottom:40px;
+}
+.logo span{font-size:.62em; letter-spacing:0}
+
+h1{
+  font-family:var(--serif); font-weight:500;
+  font-size:clamp(2rem,6vw,3rem); line-height:1.12;
+  letter-spacing:-.015em; margin-bottom:20px; color:var(--blanc);
+}
+h2{
+  font-family:var(--serif); font-weight:500;
+  font-size:clamp(1.5rem,4.4vw,2rem); line-height:1.2;
+  letter-spacing:-.01em; color:var(--blanc);
+}
+.rose{color:var(--rose-vif)}
+
+.lead{font-size:1.05rem; color:var(--gris); margin-bottom:28px}
+.meta{
+  font-size:.72rem; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--rose-vif); margin-bottom:16px;
+}
+
+.carte{
+  background:var(--surface); border:1px solid var(--trait);
+  border-radius:var(--r); box-shadow:var(--ombre);
+  padding:clamp(24px,5vw,40px);
+}
+
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:var(--sans); font-size:.95rem; font-weight:600;
+  padding:15px 30px; border-radius:999px; border:1px solid transparent;
+  cursor:pointer; text-decoration:none; line-height:1;
+  transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
+}
+.btn-primaire{background:var(--rose); color:#fff; box-shadow:0 8px 24px rgba(176,92,122,.34)}
+.btn-primaire:hover{background:var(--rose-vif); color:var(--noir); transform:translateY(-1px)}
+.btn-primaire:disabled{background:#4A4C58; color:var(--gris); box-shadow:none; cursor:not-allowed; transform:none}
+.btn-fantome{background:transparent; color:var(--gris); padding:10px 4px; font-weight:500; font-size:.85rem}
+.btn-fantome:hover{color:var(--rose-vif)}
+
+.progression{margin-bottom:32px}
+.barre{height:3px; background:rgba(255,255,255,.1); border-radius:999px; overflow:hidden}
+.barre i{display:block; height:100%; width:0; background:var(--rose-vif); border-radius:999px; transition:width .45s cubic-bezier(.4,0,.2,1)}
+.compteur{
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--gris); margin-bottom:10px;
+}
+
+.reponses{display:flex; flex-direction:column; gap:10px; margin-top:28px}
+.reponse{
+  text-align:left; width:100%;
+  background:rgba(255,255,255,.035); border:1px solid var(--trait); border-radius:12px;
+  padding:17px 20px; font-family:var(--sans); font-size:1rem; color:var(--blanc);
+  cursor:pointer; transition:border-color .18s ease, background .18s ease, transform .12s ease;
+  display:flex; align-items:center; gap:14px; line-height:1.45;
+}
+.reponse:hover{border-color:var(--rose-vif); background:rgba(176,92,122,.15); transform:translateX(3px)}
+.reponse .puce{
+  flex:0 0 22px; height:22px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.28); transition:all .18s ease;
+}
+.reponse:hover .puce{border-color:var(--rose-vif); background:var(--rose-vif); box-shadow:inset 0 0 0 4px var(--surface)}
+.reponse.choisie{border-color:var(--rose-vif); background:rgba(176,92,122,.18)}
+.reponse.choisie .puce{border-color:var(--rose-vif); background:var(--rose-vif); box-shadow:inset 0 0 0 4px var(--surface)}
+
+label.champ{display:block; font-size:.78rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--gris); margin-bottom:8px}
+input[type=email], input[type=text]{
+  width:100%; font-family:var(--sans); font-size:1rem; color:var(--blanc);
+  padding:15px 18px; border:1px solid var(--trait); border-radius:12px;
+  background:rgba(255,255,255,.05);
+  transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+input[type=email]::placeholder, input[type=text]::placeholder{color:#79818B}
+input[type=email]:focus, input[type=text]:focus{
+  outline:none; border-color:var(--rose-vif); background:rgba(255,255,255,.07);
+  box-shadow:0 0 0 3px rgba(176,92,122,.22);
+}
+.consentement{display:flex; gap:12px; align-items:flex-start; margin:20px 0 8px}
+.consentement input{margin-top:3px; width:17px; height:17px; accent-color:var(--rose-vif); flex:0 0 auto; cursor:pointer}
+.consentement label{font-size:.85rem; color:var(--gris); line-height:1.5; cursor:pointer}
+.legal{font-size:.74rem; color:#828A94; line-height:1.55; margin-top:14px}
+.legal a{color:var(--rose-vif)}
+
+.erreur{color:#F09A94; font-size:.82rem; margin-top:10px; display:none}
+.erreur.on{display:block}
+
+.filet{height:2px; width:48px; background:var(--rose-vif); border-radius:2px; margin:22px 0}
+.bloc-resultat p{margin-bottom:15px; color:#CFD6DB}
+.geste{
+  background:rgba(176,92,122,.13); border-left:3px solid var(--rose-vif);
+  border-radius:0 12px 12px 0; padding:20px 24px; margin:26px 0;
+}
+.geste .titre{font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--rose-vif); margin-bottom:8px}
+.geste p{margin:0; color:var(--blanc)}
+.avertissement{
+  border-top:1px solid var(--trait); margin-top:32px; padding-top:20px;
+  font-size:.82rem; color:#8F97A1; line-height:1.6;
+}
+
+.centre{text-align:center}
+.pied{text-align:center; font-size:.74rem; color:#6E7681; padding:0 24px 32px}
+
+.ecran{display:none; animation:entree .4s cubic-bezier(.2,.7,.3,1)}
+.ecran.actif{display:block}
+@keyframes entree{from{opacity:0; transform:translateY(12px)} to{opacity:1; transform:none}}
+
+@media (max-width:520px){
+  .wrap{padding:20px 16px 48px}
+  .btn{width:100%; justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- Retirer cette ligne avant la mise en ligne -->
+<div class="badge-test">Prototype · contenu test</div>
+
+<div class="wrap">
+
+  <!-- ÉCRAN 1 : ACCUEIL -->
+  <section class="ecran actif" id="ecran-accueil">
+    <div class="logo">Couple <span>inc.</span></div>
+    <div class="carte">
+      <div class="meta">Test gratuit · 2 minutes</div>
+      <h1>Qu'est-ce que votre entreprise est en train de faire à <span class="rose">votre couple</span> ?</h1>
+      <p class="lead">
+        Huit questions. À la fin, vous saurez dans quelle dynamique votre couple est
+        entré sans s'en rendre compte, et le premier geste pour en sortir.
+      </p>
+      <button class="btn btn-primaire" id="btn-demarrer">Commencer le test →</button>
+    </div>
+  </section>
+
+  <!-- ÉCRAN 2 : QUESTIONS -->
+  <section class="ecran" id="ecran-questions">
+    <div class="progression">
+      <div class="compteur">
+        <span id="etiquette-progression">Question 1 sur 8</span>
+        <span id="pourcentage">0 %</span>
+      </div>
+      <div class="barre"><i id="jauge"></i></div>
+    </div>
+    <div class="carte">
+      <h2 id="texte-question"></h2>
+      <div class="reponses" id="liste-reponses"></div>
+    </div>
+    <div style="margin-top:18px">
+      <button class="btn btn-fantome" id="btn-retour">← Question précédente</button>
+    </div>
+  </section>
+
+  <!-- ÉCRAN 3 : CAPTURE DU COURRIEL -->
+  <section class="ecran" id="ecran-courriel">
+    <div class="carte">
+      <div class="meta">Votre résultat est prêt</div>
+      <h2>Où on vous l'envoie ?</h2>
+      <div class="filet"></div>
+      <p class="lead" style="margin-bottom:26px">
+        Vous recevez votre portrait complet dans les prochaines minutes : ce qui se passe
+        dans votre couple en ce moment, ce que ça coûte si rien ne change, et le geste
+        concret à poser cette semaine.
+      </p>
+
+      <form id="formulaire" novalidate>
+        <label class="champ" for="prenom">Votre prénom</label>
+        <input type="text" id="prenom" name="prenom" placeholder="Marie" autocomplete="given-name" required>
+
+        <div style="height:16px"></div>
+
+        <label class="champ" for="courriel">Votre courriel</label>
+        <input type="email" id="courriel" name="courriel" placeholder="marie@exemple.com" autocomplete="email" required>
+
+        <div class="consentement">
+          <input type="checkbox" id="consentement" name="consentement">
+          <label for="consentement">
+            J'accepte de recevoir mon résultat et les communications de Couple inc. par
+            courriel. Je peux me désabonner en tout temps.
+          </label>
+        </div>
+
+        <p class="erreur" id="message-erreur"></p>
+
+        <div style="margin-top:20px">
+          <button type="submit" class="btn btn-primaire" id="btn-envoyer">Voir mon résultat →</button>
+        </div>
+
+        <p class="legal">
+          Vos réponses restent confidentielles. Consultez notre
+          <a href="#" target="_blank" rel="noopener">politique de confidentialité</a>.
+          Aucun partage à des tiers.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ÉCRAN 4 : RÉSULTAT -->
+  <section class="ecran" id="ecran-resultat">
+    <div class="carte">
+      <div class="meta">Votre dynamique de couple</div>
+      <h2 id="nom-profil"></h2>
+      <div class="filet"></div>
+      <p class="lead" id="resume-profil" style="margin-bottom:26px"></p>
+
+      <div class="bloc-resultat" id="corps-profil"></div>
+
+      <div class="geste">
+        <div class="titre">Le geste de cette semaine</div>
+        <p id="geste-profil"></p>
+      </div>
+
+      <p style="color:#CFD6DB" id="suite-profil"></p>
+
+      <div style="margin-top:28px">
+        <a class="btn btn-primaire" href="#" id="btn-cta" target="_top" rel="noopener">Parler à Martine →</a>
+      </div>
+
+      <p class="avertissement" id="avertissement"></p>
+    </div>
+    <p class="centre" style="margin-top:20px">
+      <button class="btn btn-fantome" id="btn-recommencer">Refaire le test</button>
+    </p>
+  </section>
+
+</div>
+
+<p class="pied">Couple inc. · Un programme Ax-One · S'élever à deux</p>
+
+<script>
+/* ============================================================
+   CONFIGURATION
+   C'est ici que le contenu de Martine viendra remplacer le test.
+   Rien d'autre dans le fichier n'a besoin d'être touché.
+   ============================================================ */
+
+/* --- Suivi. Deux façons, au choix.
+       gtm : conteneur Google Tag Manager (format GTM-XXXXXXX). Les événements sont
+             poussés dans le dataLayer. Il faut ensuite créer les balises dans GTM.
+       ga4 : identifiant de mesure GA4 direct (format G-XXXXXXXXXX), sans passer par GTM.
+       Laisser les deux vides désactive tout : aucun script externe n'est chargé. --- */
+const ANALYTICS = {
+  gtm: "",                   // ex. "GTM-P34CM5P9" quand on voudra mesurer
+  ga4: "",
+  nom: "quiz-couple-inc",    // nom du quiz, envoyé avec chaque événement
+  console: false             // true pour voir les événements dans la console
+};
+
+/* --- Où envoyer le contact. Voir la note en bas du fichier. --- */
+const ENVOI = {
+  actif: false,                       // passer à true une fois Brevo branché
+  url: "",                            // URL du point de collecte (Brevo ou autre)
+  listes: {                           // un identifiant de liste par profil
+    associes: null,
+    paralleles: null,
+    moteur: null,
+    urgence: null
+  }
+};
+
+/* --- Les profils de résultat --- */
+const PROFILS = {
+  associes: {
+    nom: "Les associés",
+    resume: "Votre couple fonctionne. C'est justement le problème.",
+    corps: [
+      "Vous formez une équipe redoutable. Les décisions se prennent vite, les rôles sont clairs, la business avance. De l'extérieur, on vous envie.",
+      "Mais quand la dernière réunion se termine, il ne reste plus grand-chose à se dire. Vos conversations passent toutes par l'entreprise. Vous êtes devenus deux excellents associés, et un couple qui s'écrit de moins en moins."
+    ],
+    geste: "Un souper cette semaine, sans parler de la business. Pas une soirée complète, juste un repas. Notez combien de fois vous devez vous reprendre.",
+    suite: "Ce n'est pas de la distance, c'est une habitude. Elle se défait, mais elle ne se défait pas toute seule.",
+    cta: "Parler à Martine →"
+  },
+  paralleles: {
+    nom: "Les parallèles",
+    resume: "Vous avancez tous les deux. Plus dans la même direction.",
+    corps: [
+      "Chacun porte sa partie. Vous êtes efficaces, vous êtes occupés, et vous ne vous nuisez pas. Les journées passent et personne ne se plaint.",
+      "Sauf que vous ne savez plus vraiment ce que l'autre veut. Pas pour l'entreprise, pour sa vie. Vous avez arrêté de vous le demander, et le silence a fini par ressembler à de l'accord."
+    ],
+    geste: "Posez-lui cette question, et écoutez sans répondre : « Où est-ce que tu veux qu'on soit dans trois ans ? » Vous serez peut-être surpris.",
+    suite: "Deux trajectoires parallèles ne se croisent jamais par hasard. Il faut décider de tourner.",
+    cta: "Parler à Martine →"
+  },
+  moteur: {
+    nom: "Le moteur et le frein",
+    resume: "Un de vous deux pousse. L'autre retient. Vous êtes tous les deux épuisés.",
+    corps: [
+      "Il y a celui qui a toujours la prochaine idée, le prochain projet, la prochaine urgence. Et il y a celui qui ramasse, qui tempère, qui rappelle la réalité.",
+      "Chacun est convaincu de sauver le couple à sa façon. Le moteur trouve l'autre négatif. Le frein trouve l'autre inconscient. Vous ne vous battez pas contre l'autre, vous vous battez contre le rôle dans lequel vous êtes coincés."
+    ],
+    geste: "Échangez de rôle pour une décision cette semaine. Une seule. Celui qui freine décide, celui qui pousse suit sans commenter.",
+    suite: "Ces rôles ne sont pas des personnalités. Ce sont des positions, et une position, ça se change.",
+    cta: "Parler à Martine →"
+  },
+  urgence: {
+    nom: "L'urgence permanente",
+    resume: "Votre couple attend que ça se calme. Ça fait des années.",
+    corps: [
+      "Il y a toujours une raison de repousser. Un contrat à finir, une période creuse à traverser, un mois plus tranquille qui s'en vient. Vous vous êtes dit « après ça, on prend du temps », et vous vous le dites encore.",
+      "Ce n'est pas de la négligence. C'est une dépendance à la montée d'adrénaline que crée l'entreprise, et à côté de laquelle une soirée calme paraît vide. Votre couple n'est pas en compétition avec votre business. Il est en compétition avec l'intensité."
+    ],
+    geste: "Bloquez deux heures au calendrier, cette semaine, comme un rendez-vous client. Traitez-le comme un rendez-vous client : on ne l'annule pas.",
+    suite: "L'accalmie ne viendra pas. Elle se décide, et elle se protège.",
+    cta: "Parler à Martine →"
+  }
+};
+
+/* --- Les questions. Chaque réponse pointe vers un profil. --- */
+const QUESTIONS = [
+  {
+    texte: "Votre dernière vraie conversation à deux portait sur quoi ?",
+    reponses: [
+      { texte: "Un dossier, un client, une décision d'affaires", profil: "associes" },
+      { texte: "L'organisation de la semaine, la logistique", profil: "paralleles" },
+      { texte: "Un désaccord sur un risque à prendre ou pas", profil: "moteur" },
+      { texte: "Honnêtement, je ne m'en souviens pas", profil: "urgence" }
+    ]
+  },
+  {
+    texte: "Quand une soirée se libère sans rien de prévu, il se passe quoi ?",
+    reponses: [
+      { texte: "On en profite pour avancer sur l'entreprise", profil: "associes" },
+      { texte: "Chacun fait ses affaires de son bord", profil: "paralleles" },
+      { texte: "L'un veut sortir, l'autre veut décrocher", profil: "moteur" },
+      { texte: "Une soirée libre, ça n'arrive plus vraiment", profil: "urgence" }
+    ]
+  },
+  {
+    texte: "Comment les décisions importantes se prennent chez vous ?",
+    reponses: [
+      { texte: "Efficacement, on est alignés et ça va vite", profil: "associes" },
+      { texte: "Chacun décide dans sa zone, on ne se mêle pas", profil: "paralleles" },
+      { texte: "Ça finit souvent par une négociation tendue", profil: "moteur" },
+      { texte: "Dans l'urgence, quand on n'a plus le choix", profil: "urgence" }
+    ]
+  },
+  {
+    texte: "Si votre conjoint devait nommer ce qui vous manque en ce moment, il dirait quoi ?",
+    reponses: [
+      { texte: "De la légèreté, du plaisir ensemble", profil: "associes" },
+      { texte: "De la proximité, on est devenus des colocataires", profil: "paralleles" },
+      { texte: "De la reconnaissance pour ce que je porte", profil: "moteur" },
+      { texte: "Du temps, tout simplement du temps", profil: "urgence" }
+    ]
+  },
+  {
+    texte: "Vos vacances des deux dernières années, ça ressemblait à quoi ?",
+    reponses: [
+      { texte: "On y va, mais on travaille pareil", profil: "associes" },
+      { texte: "On y va, et on se retrouve chacun dans sa bulle", profil: "paralleles" },
+      { texte: "L'un veut partir loin, l'autre trouve ça déraisonnable", profil: "moteur" },
+      { texte: "On a repoussé, encore", profil: "urgence" }
+    ]
+  },
+  {
+    texte: "Quand l'entreprise va mal, votre couple réagit comment ?",
+    reponses: [
+      { texte: "On se serre les coudes, on redevient une équipe", profil: "associes" },
+      { texte: "Chacun encaisse de son côté, en silence", profil: "paralleles" },
+      { texte: "On se reproche mutuellement d'en être là", profil: "moteur" },
+      { texte: "On accélère, on travaille plus fort", profil: "urgence" }
+    ]
+  },
+  {
+    texte: "Complétez : « Depuis qu'on est en affaires ensemble, on a perdu... »",
+    reponses: [
+      { texte: "Notre spontanéité, tout est planifié", profil: "associes" },
+      { texte: "Notre complicité, on ne se comprend plus pareil", profil: "paralleles" },
+      { texte: "Notre équilibre, il y en a un qui porte plus", profil: "moteur" },
+      { texte: "Notre calme, on vit toujours en mode urgence", profil: "urgence" }
+    ]
+  },
+  {
+    texte: "Qu'est-ce que vous avez déjà essayé pour que ça aille mieux ?",
+    reponses: [
+      { texte: "Se donner des règles : pas de business le soir", profil: "associes" },
+      { texte: "Un voyage, un déménagement, un changement d'environnement", profil: "paralleles" },
+      { texte: "Redéfinir qui fait quoi dans l'entreprise", profil: "moteur" },
+      { texte: "Rien, on attend que ça se calme", profil: "urgence" }
+    ]
+  }
+];
+
+/* --- L'avertissement. Cette version est un texte de travail.
+       Martine doit écrire la sienne : c'est sa frontière professionnelle. --- */
+const AVERTISSEMENT =
+  "Ce test est un outil de réflexion, pas un diagnostic. Couple inc. n'est ni de la " +
+  "psychologie ni de la thérapie de couple. Si votre situation implique de la violence, " +
+  "une dépendance ou une détresse importante, parlez-en à un professionnel de la santé.";
+
+
+/* ============================================================
+   MOTEUR — normalement, rien à modifier ici.
+   ============================================================ */
+
+/* --- Chargement du suivi. Rien n'est chargé si les deux champs sont vides. --- */
+window.dataLayer = window.dataLayer || [];
+
+(function(){
+  if (ANALYTICS.gtm){
+    window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var j = document.createElement("script");
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + ANALYTICS.gtm;
+    document.head.appendChild(j);
+  }
+  if (ANALYTICS.ga4){
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + ANALYTICS.ga4;
+    document.head.appendChild(s);
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", ANALYTICS.ga4, { send_page_view: true });
+  }
+})();
+
+/* Pousse l'événement dans le dataLayer pour GTM, et directement dans GA4 si
+   l'identifiant G- est utilisé sans GTM. */
+function suivre(nom, params){
+  var p = params || {};
+  if (ANALYTICS.gtm){
+    var charge = { event: nom };
+    for (var k in p) charge[k] = p[k];
+    window.dataLayer.push(charge);
+  }
+  if (ANALYTICS.ga4 && window.gtag) gtag("event", nom, p);
+  if (ANALYTICS.console) console.log("[suivi]", nom, p);
+}
+
+const ecrans = {
+  accueil:   document.getElementById("ecran-accueil"),
+  questions: document.getElementById("ecran-questions"),
+  courriel:  document.getElementById("ecran-courriel"),
+  resultat:  document.getElementById("ecran-resultat")
+};
+
+let index = 0;
+const choix = new Array(QUESTIONS.length).fill(null);
+
+function afficher(nom){
+  Object.values(ecrans).forEach(e => e.classList.remove("actif"));
+  ecrans[nom].classList.add("actif");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function rendreQuestion(){
+  const q = QUESTIONS[index];
+  document.getElementById("texte-question").textContent = q.texte;
+  document.getElementById("etiquette-progression").textContent =
+    "Question " + (index + 1) + " sur " + QUESTIONS.length;
+
+  const pct = Math.round((index / QUESTIONS.length) * 100);
+  document.getElementById("pourcentage").textContent = pct + " %";
+  document.getElementById("jauge").style.width = pct + "%";
+
+  const liste = document.getElementById("liste-reponses");
+  liste.innerHTML = "";
+  q.reponses.forEach((r, i) => {
+    const b = document.createElement("button");
+    b.className = "reponse" + (choix[index] === i ? " choisie" : "");
+    b.innerHTML = '<span class="puce"></span><span>' + r.texte + '</span>';
+    b.addEventListener("click", () => repondre(i));
+    liste.appendChild(b);
+  });
+
+  document.getElementById("btn-retour").style.visibility = index === 0 ? "hidden" : "visible";
+}
+
+function calculerProfil(){
+  const points = {};
+  Object.keys(PROFILS).forEach(k => points[k] = 0);
+  choix.forEach((c, i) => {
+    if (c === null) return;
+    points[QUESTIONS[i].reponses[c].profil]++;
+  });
+  // En cas d'égalité, l'ordre de déclaration des profils départage.
+  let gagnant = Object.keys(points)[0];
+  Object.keys(points).forEach(k => { if (points[k] > points[gagnant]) gagnant = k; });
+  return gagnant;
+}
+
+function rendreResultat(cle){
+  const p = PROFILS[cle];
+  document.getElementById("nom-profil").textContent = p.nom;
+  document.getElementById("resume-profil").textContent = p.resume;
+  document.getElementById("corps-profil").innerHTML =
+    p.corps.map(t => "<p>" + t + "</p>").join("");
+  document.getElementById("geste-profil").textContent = p.geste;
+  document.getElementById("suite-profil").textContent = p.suite;
+  document.getElementById("btn-cta").textContent = p.cta;
+  if (p.lien) document.getElementById("btn-cta").href = p.lien;
+  document.getElementById("avertissement").textContent = AVERTISSEMENT;
+  afficher("resultat");
+}
+
+/* --- Navigation et historique du navigateur ---
+   Chaque étape devient une entrée d'historique, donc le bouton Précédent
+   du navigateur recule d'une question au lieu de quitter la page. --- */
+
+function rendreEtat(etat){
+  if (!etat || etat.v === "accueil"){ afficher("accueil"); return; }
+  if (etat.v === "question"){ index = etat.i; rendreQuestion(); afficher("questions"); return; }
+  if (etat.v === "courriel"){ document.getElementById("jauge").style.width = "100%"; afficher("courriel"); return; }
+  if (etat.v === "resultat"){ rendreResultat(etat.p); return; }
+}
+
+function aller(etat){
+  history.pushState(etat, "");
+  rendreEtat(etat);
+}
+
+window.addEventListener("popstate", function(e){
+  rendreEtat(e.state);
+});
+
+history.replaceState({ v: "accueil" }, "");
+
+/* --- Actions --- */
+
+document.getElementById("btn-demarrer").addEventListener("click", () => {
+  suivre("quiz_demarrage", { quiz: ANALYTICS.nom });
+  aller({ v: "question", i: 0 });
+});
+
+document.getElementById("btn-retour").addEventListener("click", () => {
+  history.back();
+});
+
+function repondre(i){
+  choix[index] = i;
+  const numero = index + 1;
+  rendreQuestion();
+  suivre("quiz_question", {
+    quiz: ANALYTICS.nom,
+    numero_question: numero,
+    total_questions: QUESTIONS.length,
+    profil_reponse: QUESTIONS[index].reponses[i].profil
+  });
+  setTimeout(() => {
+    if (index < QUESTIONS.length - 1){
+      aller({ v: "question", i: index + 1 });
+    } else {
+      suivre("quiz_ecran_courriel", { quiz: ANALYTICS.nom });
+      aller({ v: "courriel" });
+    }
+  }, 260);
+}
+
+document.getElementById("btn-recommencer").addEventListener("click", () => {
+  index = 0;
+  choix.fill(null);
+  document.getElementById("formulaire").reset();
+  suivre("quiz_recommence", { quiz: ANALYTICS.nom });
+  aller({ v: "accueil" });
+});
+
+document.getElementById("formulaire").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const prenom = document.getElementById("prenom").value.trim();
+  const courriel = document.getElementById("courriel").value.trim();
+  const consent = document.getElementById("consentement").checked;
+  const err = document.getElementById("message-erreur");
+  const bouton = document.getElementById("btn-envoyer");
+
+  err.classList.remove("on");
+
+  if (!prenom){ err.textContent = "Entrez votre prénom."; err.classList.add("on"); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(courriel)){
+    err.textContent = "Cette adresse courriel ne semble pas valide.";
+    err.classList.add("on"); return;
+  }
+  if (!consent){
+    err.textContent = "Cochez la case pour recevoir votre résultat par courriel.";
+    err.classList.add("on"); return;
+  }
+
+  const profil = calculerProfil();
+  bouton.disabled = true;
+  bouton.textContent = "Envoi en cours...";
+
+  if (ENVOI.actif && ENVOI.url){
+    try {
+      await fetch(ENVOI.url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prenom: prenom,
+          email: courriel,
+          profil: profil,
+          liste: ENVOI.listes[profil],
+          consentement: true,
+          horodatage: new Date().toISOString()
+        })
+      });
+    } catch (e){
+      // Le résultat s'affiche quand même. On ne punit pas la personne
+      // pour une erreur réseau.
+      console.error("Envoi échoué :", e);
+    }
+  } else {
+    console.log("MODE PROTOTYPE — aucun envoi réel.",
+      { prenom: prenom, courriel: courriel, profil: profil });
+  }
+
+  suivre("quiz_lead", { quiz: ANALYTICS.nom, profil: profil });
+  suivre("quiz_resultat", { quiz: ANALYTICS.nom, profil: profil });
+
+  bouton.disabled = false;
+  bouton.textContent = "Voir mon résultat →";
+  aller({ v: "resultat", p: profil });
+});
+
+document.getElementById("btn-cta").addEventListener("click", () => {
+  suivre("quiz_cta", { quiz: ANALYTICS.nom });
+});
+
+</script>
+
+<!--
+================================================================
+BRANCHER L'ENVOI (à faire quand le vrai contenu sera prêt)
+================================================================
+
+1. Créer un compte Brevo. Créer une liste par profil de résultat.
+2. Créer une automatisation par liste : déclencheur « contact ajouté
+   à la liste », action « envoyer le courriel du profil ».
+3. Créer un point de collecte qui reçoit le POST du formulaire et
+   ajoute le contact à la bonne liste. Deux façons :
+   a) Un Cloudflare Worker de quinze lignes qui appelle l'API Brevo
+      avec la clé API gardée côté serveur. C'est la bonne façon.
+   b) Un scénario Make ou Zapier avec un webhook. Plus rapide, moins
+      propre, suffisant pour une campagne temporaire.
+4. Mettre ENVOI.actif à true, remplir ENVOI.url et les identifiants
+   de liste.
+
+NE JAMAIS mettre une clé API Brevo dans ce fichier. Il est public.
+
+À VÉRIFIER AVANT LA MISE EN LIGNE
+- Retirer le badge « Prototype » en haut du body
+- Brancher le vrai lien de la politique de confidentialité
+- Ajouter le nom et l'adresse postale de l'entreprise dans les
+  courriels envoyés (obligation LCAP)
+- Faire écrire l'avertissement par Martine
+================================================================
+-->
+</body>
+</html>
