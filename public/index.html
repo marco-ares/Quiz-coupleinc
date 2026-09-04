@@ -3,43 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quiz Couple inc. (prototype)</title>
+<title>Diagnostic express — Couple inc.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    COUPLE INC. — PROTOTYPE DE QUIZ
-   Contenu de test. Structure prête pour le vrai contenu.
-   Tout se remplace dans le bloc CONFIGURATION en bas de page.
+   Socle dark premium Ax-One, accent rose Couple inc.
+   Contenu de test. Tout se remplace dans le bloc CONFIGURATION.
    ============================================================ */
 
 :root{
-  /* Palette Ax-One, accent Couple inc. */
   --noir:      #191B21;
   --fond:      #23242C;
   --surface:   #31323D;
   --rose:      #B05C7A;
+  --rose-vif:  #CE8AA3;
   --gris:      #A8B2B8;
   --gris-pale: #D8DFE5;
   --blanc:     #F2F6F7;
-
-  --rose-clair: #F6EBEF;
-  --rose-fonce: #8E4761;
 
   --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
 
   --r: 16px;
-  --ombre: 0 1px 2px rgba(25,27,33,.04), 0 12px 32px rgba(25,27,33,.07);
+  --ombre: 0 1px 2px rgba(0,0,0,.3), 0 18px 44px rgba(0,0,0,.36);
+  --trait: rgba(255,255,255,.09);
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:var(--sans);
-  background:var(--blanc);
-  color:var(--noir);
+  background:var(--fond);
+  color:var(--blanc);
   -webkit-font-smoothing:antialiased;
   line-height:1.6;
   min-height:100vh;
@@ -47,21 +45,13 @@ body{
   flex-direction:column;
 }
 
-/* Fond doux, chaleureux, jamais froid */
 body::before{
   content:"";
   position:fixed; inset:0; z-index:-1;
   background:
-    radial-gradient(900px 600px at 15% -5%, #FBF3F6 0%, transparent 60%),
-    radial-gradient(800px 700px at 100% 100%, #EDF1F4 0%, transparent 55%),
-    var(--blanc);
-}
-
-.badge-test{
-  position:fixed; top:12px; right:12px; z-index:50;
-  background:var(--noir); color:var(--blanc);
-  font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
-  padding:6px 12px; border-radius:999px; opacity:.75;
+    radial-gradient(900px 620px at 12% -8%, rgba(176,92,122,.16) 0%, transparent 62%),
+    radial-gradient(820px 700px at 105% 105%, rgba(49,50,61,.9) 0%, transparent 58%),
+    linear-gradient(180deg, #23242C 0%, #191B21 100%);
 }
 
 .wrap{
@@ -73,7 +63,7 @@ body::before{
 
 .logo{
   font-family:var(--serif); font-size:1.7rem; font-weight:500;
-  color:var(--rose); letter-spacing:-.01em;
+  color:var(--rose-vif); letter-spacing:-.01em;
   text-align:center; margin-bottom:40px;
 }
 .logo span{font-size:.62em; letter-spacing:0}
@@ -81,28 +71,27 @@ body::before{
 h1{
   font-family:var(--serif); font-weight:500;
   font-size:clamp(2rem,6vw,3rem); line-height:1.12;
-  letter-spacing:-.015em; margin-bottom:20px;
+  letter-spacing:-.015em; margin-bottom:20px; color:var(--blanc);
 }
 h2{
   font-family:var(--serif); font-weight:500;
   font-size:clamp(1.5rem,4.4vw,2rem); line-height:1.2;
-  letter-spacing:-.01em;
+  letter-spacing:-.01em; color:var(--blanc);
 }
-.rose{color:var(--rose)}
+.rose{color:var(--rose-vif)}
 
-.lead{font-size:1.05rem; color:#4A5058; margin-bottom:28px}
+.lead{font-size:1.05rem; color:var(--gris); margin-bottom:28px}
 .meta{
   font-size:.72rem; font-weight:600; letter-spacing:.12em;
-  text-transform:uppercase; color:var(--rose); margin-bottom:16px;
+  text-transform:uppercase; color:var(--rose-vif); margin-bottom:16px;
 }
 
 .carte{
-  background:#fff; border:1px solid var(--gris-pale);
+  background:var(--surface); border:1px solid var(--trait);
   border-radius:var(--r); box-shadow:var(--ombre);
   padding:clamp(24px,5vw,40px);
 }
 
-/* Boutons */
 .btn{
   display:inline-flex; align-items:center; gap:10px;
   font-family:var(--sans); font-size:.95rem; font-weight:600;
@@ -110,75 +99,74 @@ h2{
   cursor:pointer; text-decoration:none; line-height:1;
   transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
 }
-.btn-primaire{background:var(--rose); color:#fff; box-shadow:0 6px 18px rgba(176,92,122,.28)}
-.btn-primaire:hover{background:var(--rose-fonce); transform:translateY(-1px)}
-.btn-primaire:disabled{background:var(--gris); box-shadow:none; cursor:not-allowed; transform:none}
-.btn-fantome{background:transparent; color:#6A7078; padding:10px 4px; font-weight:500; font-size:.85rem}
-.btn-fantome:hover{color:var(--rose)}
+.btn-primaire{background:var(--rose); color:#fff; box-shadow:0 8px 24px rgba(176,92,122,.34)}
+.btn-primaire:hover{background:var(--rose-vif); color:var(--noir); transform:translateY(-1px)}
+.btn-primaire:disabled{background:#4A4C58; color:var(--gris); box-shadow:none; cursor:not-allowed; transform:none}
+.btn-fantome{background:transparent; color:var(--gris); padding:10px 4px; font-weight:500; font-size:.85rem}
+.btn-fantome:hover{color:var(--rose-vif)}
 
-/* Progression */
 .progression{margin-bottom:32px}
-.barre{height:3px; background:var(--gris-pale); border-radius:999px; overflow:hidden}
-.barre i{display:block; height:100%; width:0; background:var(--rose); border-radius:999px; transition:width .45s cubic-bezier(.4,0,.2,1)}
+.barre{height:3px; background:rgba(255,255,255,.1); border-radius:999px; overflow:hidden}
+.barre i{display:block; height:100%; width:0; background:var(--rose-vif); border-radius:999px; transition:width .45s cubic-bezier(.4,0,.2,1)}
 .compteur{
   display:flex; justify-content:space-between; align-items:center;
   font-size:.72rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
-  color:#8A9099; margin-bottom:10px;
+  color:var(--gris); margin-bottom:10px;
 }
 
-/* Réponses */
 .reponses{display:flex; flex-direction:column; gap:10px; margin-top:28px}
 .reponse{
   text-align:left; width:100%;
-  background:#fff; border:1px solid var(--gris-pale); border-radius:12px;
-  padding:17px 20px; font-family:var(--sans); font-size:1rem; color:var(--noir);
+  background:rgba(255,255,255,.035); border:1px solid var(--trait); border-radius:12px;
+  padding:17px 20px; font-family:var(--sans); font-size:1rem; color:var(--blanc);
   cursor:pointer; transition:border-color .18s ease, background .18s ease, transform .12s ease;
   display:flex; align-items:center; gap:14px; line-height:1.45;
 }
-.reponse:hover{border-color:var(--rose); background:var(--rose-clair); transform:translateX(3px)}
+.reponse:hover{border-color:var(--rose-vif); background:rgba(176,92,122,.15); transform:translateX(3px)}
 .reponse .puce{
   flex:0 0 22px; height:22px; border-radius:50%;
-  border:1.5px solid var(--gris); transition:all .18s ease;
+  border:1.5px solid rgba(255,255,255,.28); transition:all .18s ease;
 }
-.reponse:hover .puce{border-color:var(--rose); background:var(--rose); box-shadow:inset 0 0 0 4px #fff}
-.reponse.choisie{border-color:var(--rose); background:var(--rose-clair)}
-.reponse.choisie .puce{border-color:var(--rose); background:var(--rose); box-shadow:inset 0 0 0 4px #fff}
+.reponse:hover .puce{border-color:var(--rose-vif); background:var(--rose-vif); box-shadow:inset 0 0 0 4px var(--surface)}
+.reponse.choisie{border-color:var(--rose-vif); background:rgba(176,92,122,.18)}
+.reponse.choisie .puce{border-color:var(--rose-vif); background:var(--rose-vif); box-shadow:inset 0 0 0 4px var(--surface)}
 
-/* Formulaire */
-label.champ{display:block; font-size:.78rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#6A7078; margin-bottom:8px}
+label.champ{display:block; font-size:.78rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--gris); margin-bottom:8px}
 input[type=email], input[type=text]{
-  width:100%; font-family:var(--sans); font-size:1rem; color:var(--noir);
-  padding:15px 18px; border:1px solid var(--gris-pale); border-radius:12px; background:#fff;
-  transition:border-color .18s ease, box-shadow .18s ease;
+  width:100%; font-family:var(--sans); font-size:1rem; color:var(--blanc);
+  padding:15px 18px; border:1px solid var(--trait); border-radius:12px;
+  background:rgba(255,255,255,.05);
+  transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
 }
+input[type=email]::placeholder, input[type=text]::placeholder{color:#79818B}
 input[type=email]:focus, input[type=text]:focus{
-  outline:none; border-color:var(--rose); box-shadow:0 0 0 3px rgba(176,92,122,.13);
+  outline:none; border-color:var(--rose-vif); background:rgba(255,255,255,.07);
+  box-shadow:0 0 0 3px rgba(176,92,122,.22);
 }
 .consentement{display:flex; gap:12px; align-items:flex-start; margin:20px 0 8px}
-.consentement input{margin-top:3px; width:17px; height:17px; accent-color:var(--rose); flex:0 0 auto; cursor:pointer}
-.consentement label{font-size:.85rem; color:#4A5058; line-height:1.5; cursor:pointer}
-.legal{font-size:.74rem; color:#8A9099; line-height:1.55; margin-top:14px}
-.legal a{color:var(--rose)}
+.consentement input{margin-top:3px; width:17px; height:17px; accent-color:var(--rose-vif); flex:0 0 auto; cursor:pointer}
+.consentement label{font-size:.85rem; color:var(--gris); line-height:1.5; cursor:pointer}
+.legal{font-size:.74rem; color:#828A94; line-height:1.55; margin-top:14px}
+.legal a{color:var(--rose-vif)}
 
-.erreur{color:#C0392B; font-size:.82rem; margin-top:10px; display:none}
+.erreur{color:#F09A94; font-size:.82rem; margin-top:10px; display:none}
 .erreur.on{display:block}
 
-/* Résultat */
-.filet{height:2px; width:48px; background:var(--rose); border-radius:2px; margin:22px 0}
-.bloc-resultat p{margin-bottom:15px; color:#3A4048}
+.filet{height:2px; width:48px; background:var(--rose-vif); border-radius:2px; margin:22px 0}
+.bloc-resultat p{margin-bottom:15px; color:#CFD6DB}
 .geste{
-  background:var(--rose-clair); border-left:3px solid var(--rose);
+  background:rgba(176,92,122,.13); border-left:3px solid var(--rose-vif);
   border-radius:0 12px 12px 0; padding:20px 24px; margin:26px 0;
 }
-.geste .titre{font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--rose-fonce); margin-bottom:8px}
-.geste p{margin:0; color:#3A4048}
+.geste .titre{font-size:.72rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--rose-vif); margin-bottom:8px}
+.geste p{margin:0; color:var(--blanc)}
 .avertissement{
-  border-top:1px solid var(--gris-pale); margin-top:32px; padding-top:20px;
-  font-size:.82rem; color:#6A7078; line-height:1.6;
+  border-top:1px solid var(--trait); margin-top:32px; padding-top:20px;
+  font-size:.82rem; color:#8F97A1; line-height:1.6;
 }
 
 .centre{text-align:center}
-.pied{text-align:center; font-size:.74rem; color:#9AA0A8; padding:0 24px 32px}
+.pied{text-align:center; font-size:.74rem; color:#6E7681; padding:0 24px 32px}
 
 .ecran{display:none; animation:entree .4s cubic-bezier(.2,.7,.3,1)}
 .ecran.actif{display:block}
@@ -192,22 +180,24 @@ input[type=email]:focus, input[type=text]:focus{
 </head>
 <body>
 
-<!-- Retirer cette ligne avant la mise en ligne -->
-<div class="badge-test">Prototype · contenu test</div>
-
 <div class="wrap">
 
   <!-- ÉCRAN 1 : ACCUEIL -->
   <section class="ecran actif" id="ecran-accueil">
     <div class="logo">Couple <span>inc.</span></div>
     <div class="carte">
-      <div class="meta">Test gratuit · 2 minutes</div>
-      <h1>Qu'est-ce que votre entreprise est en train de faire à <span class="rose">votre couple</span> ?</h1>
+      <div class="meta">Diagnostic gratuit · 7 minutes · à faire à deux</div>
+      <h1>Où est-ce que votre entreprise pèse le plus sur <span class="rose">votre couple</span> ?</h1>
       <p class="lead">
-        Huit questions. À la fin, vous saurez dans quelle dynamique votre couple est
-        entré sans s'en rendre compte, et le premier geste pour en sortir.
+        Dix énoncés. Répondez ensemble, avec votre première réaction plutôt qu'avec la
+        bonne réponse. Ce n'est pas un test de personnalité, c'est un instantané de votre
+        dynamique en ce moment.
       </p>
-      <button class="btn btn-primaire" id="btn-demarrer">Commencer le test →</button>
+      <p class="lead" style="margin-bottom:30px">
+        À la fin, vous verrez quelle zone de votre système est la plus fragile aujourd'hui,
+        et le premier geste pour la renforcer.
+      </p>
+      <button class="btn btn-primaire" id="btn-demarrer">Commencer le diagnostic →</button>
     </div>
   </section>
 
@@ -215,35 +205,36 @@ input[type=email]:focus, input[type=text]:focus{
   <section class="ecran" id="ecran-questions">
     <div class="progression">
       <div class="compteur">
-        <span id="etiquette-progression">Question 1 sur 8</span>
+        <span id="etiquette-progression">Énoncé 1 sur 10</span>
         <span id="pourcentage">0 %</span>
       </div>
       <div class="barre"><i id="jauge"></i></div>
     </div>
     <div class="carte">
+      <div class="meta" id="dimension-question"></div>
       <h2 id="texte-question"></h2>
       <div class="reponses" id="liste-reponses"></div>
     </div>
     <div style="margin-top:18px">
-      <button class="btn btn-fantome" id="btn-retour">← Question précédente</button>
+      <button class="btn btn-fantome" id="btn-retour">← Énoncé précédent</button>
     </div>
   </section>
 
   <!-- ÉCRAN 3 : CAPTURE DU COURRIEL -->
   <section class="ecran" id="ecran-courriel">
     <div class="carte">
-      <div class="meta">Votre résultat est prêt</div>
-      <h2>Où on vous l'envoie ?</h2>
+      <div class="meta">Dernière étape</div>
+      <h2>Votre diagnostic est prêt</h2>
       <div class="filet"></div>
       <p class="lead" style="margin-bottom:26px">
-        Vous recevez votre portrait complet dans les prochaines minutes : ce qui se passe
-        dans votre couple en ce moment, ce que ça coûte si rien ne change, et le geste
-        concret à poser cette semaine.
+        Laissez-nous vos prénoms et votre courriel, et votre portrait s'affiche
+        immédiatement : la zone où votre système se fragilise en ce moment, ce que ça
+        produit au quotidien, et le geste concret à poser cette semaine.
       </p>
 
       <form id="formulaire" novalidate>
-        <label class="champ" for="prenom">Votre prénom</label>
-        <input type="text" id="prenom" name="prenom" placeholder="Marie" autocomplete="given-name" required>
+        <label class="champ" for="prenom">Vos prénoms</label>
+        <input type="text" id="prenom" name="prenom" placeholder="Marie et Alex" autocomplete="name" required>
 
         <div style="height:16px"></div>
 
@@ -253,20 +244,20 @@ input[type=email]:focus, input[type=text]:focus{
         <div class="consentement">
           <input type="checkbox" id="consentement" name="consentement">
           <label for="consentement">
-            J'accepte de recevoir mon résultat et les communications de Couple inc. par
-            courriel. Je peux me désabonner en tout temps.
+            J'accepte de recevoir les communications de Couple inc. par courriel. Je peux
+            me désabonner en tout temps.
           </label>
         </div>
 
         <p class="erreur" id="message-erreur"></p>
 
         <div style="margin-top:20px">
-          <button type="submit" class="btn btn-primaire" id="btn-envoyer">Voir mon résultat →</button>
+          <button type="submit" class="btn btn-primaire" id="btn-envoyer">Voir notre diagnostic →</button>
         </div>
 
         <p class="legal">
           Vos réponses restent confidentielles. Consultez notre
-          <a href="#" target="_blank" rel="noopener">politique de confidentialité</a>.
+          <a href="https://ax-one.ca/politique-de-confidentialite/" target="_blank" rel="noopener">politique de confidentialité</a>.
           Aucun partage à des tiers.
         </p>
       </form>
@@ -276,7 +267,7 @@ input[type=email]:focus, input[type=text]:focus{
   <!-- ÉCRAN 4 : RÉSULTAT -->
   <section class="ecran" id="ecran-resultat">
     <div class="carte">
-      <div class="meta">Votre dynamique de couple</div>
+      <div class="meta">Votre zone la plus fragile en ce moment</div>
       <h2 id="nom-profil"></h2>
       <div class="filet"></div>
       <p class="lead" id="resume-profil" style="margin-bottom:26px"></p>
@@ -288,177 +279,192 @@ input[type=email]:focus, input[type=text]:focus{
         <p id="geste-profil"></p>
       </div>
 
-      <p style="color:#3A4048" id="suite-profil"></p>
+      <p style="color:#CFD6DB" id="suite-profil"></p>
 
       <div style="margin-top:28px">
-        <a class="btn btn-primaire" href="#" id="btn-cta">Parler à Martine →</a>
+        <a class="btn btn-primaire" href="#" id="btn-cta" target="_blank" rel="noopener">Parler à Martine →</a>
       </div>
 
       <p class="avertissement" id="avertissement"></p>
     </div>
     <p class="centre" style="margin-top:20px">
-      <button class="btn btn-fantome" id="btn-recommencer">Refaire le test</button>
+      <button class="btn btn-fantome" id="btn-recommencer">Refaire le diagnostic</button>
     </p>
   </section>
 
 </div>
 
 <p class="pied">Couple inc. · Un programme Ax-One · S'élever à deux</p>
-
 <script>
 /* ============================================================
    CONFIGURATION
-   C'est ici que le contenu de Martine viendra remplacer le test.
-   Rien d'autre dans le fichier n'a besoin d'être touché.
+   Contenu fourni par Martine (2026-09-04).
+   La logique de calcul est décrite plus bas, section MOTEUR.
    ============================================================ */
 
-/* --- Où envoyer le contact. Voir la note en bas du fichier. --- */
+/* --- Suivi. Laisser vide désactive tout, aucun script externe n'est chargé.
+       gtm : conteneur Google Tag Manager. ga4 : identifiant de mesure GA4 direct. --- */
+const ANALYTICS = {
+  gtm: "",                   // ex. "GTM-P34CM5P9" quand on voudra mesurer
+  ga4: "",
+  nom: "diagnostic-couple-inc",
+  console: false
+};
+
+/* --- Où envoyer le contact. Go High Level à brancher ici. --- */
 const ENVOI = {
-  actif: false,                       // passer à true une fois Brevo branché
-  url: "",                            // URL du point de collecte (Brevo ou autre)
-  listes: {                           // un identifiant de liste par profil
-    associes: null,
-    paralleles: null,
-    moteur: null,
-    urgence: null
+  actif: false,
+  url: "",
+  listes: {
+    sous_pression: null,
+    desaligne: null,
+    fusionne: null,
+    surcharge: null,
+    solide: null
   }
 };
 
-/* --- Les profils de résultat --- */
-const PROFILS = {
-  associes: {
-    nom: "Les associés",
-    resume: "Votre couple fonctionne. C'est justement le problème.",
-    corps: [
-      "Vous formez une équipe redoutable. Les décisions se prennent vite, les rôles sont clairs, la business avance. De l'extérieur, on vous envie.",
-      "Mais quand la dernière réunion se termine, il ne reste plus grand-chose à se dire. Vos conversations passent toutes par l'entreprise. Vous êtes devenus deux excellents associés, et un couple qui s'écrit de moins en moins."
-    ],
-    geste: "Un souper cette semaine, sans parler de la business. Pas une soirée complète, juste un repas. Notez combien de fois vous devez vous reprendre.",
-    suite: "Ce n'est pas de la distance, c'est une habitude. Elle se défait, mais elle ne se défait pas toute seule.",
-    cta: "Parler à Martine →"
-  },
-  paralleles: {
-    nom: "Les parallèles",
-    resume: "Vous avancez tous les deux. Plus dans la même direction.",
-    corps: [
-      "Chacun porte sa partie. Vous êtes efficaces, vous êtes occupés, et vous ne vous nuisez pas. Les journées passent et personne ne se plaint.",
-      "Sauf que vous ne savez plus vraiment ce que l'autre veut. Pas pour l'entreprise, pour sa vie. Vous avez arrêté de vous le demander, et le silence a fini par ressembler à de l'accord."
-    ],
-    geste: "Posez-lui cette question, et écoutez sans répondre : « Où est-ce que tu veux qu'on soit dans trois ans ? » Vous serez peut-être surpris.",
-    suite: "Deux trajectoires parallèles ne se croisent jamais par hasard. Il faut décider de tourner.",
-    cta: "Parler à Martine →"
-  },
-  moteur: {
-    nom: "Le moteur et le frein",
-    resume: "Un de vous deux pousse. L'autre retient. Vous êtes tous les deux épuisés.",
-    corps: [
-      "Il y a celui qui a toujours la prochaine idée, le prochain projet, la prochaine urgence. Et il y a celui qui ramasse, qui tempère, qui rappelle la réalité.",
-      "Chacun est convaincu de sauver le couple à sa façon. Le moteur trouve l'autre négatif. Le frein trouve l'autre inconscient. Vous ne vous battez pas contre l'autre, vous vous battez contre le rôle dans lequel vous êtes coincés."
-    ],
-    geste: "Échangez de rôle pour une décision cette semaine. Une seule. Celui qui freine décide, celui qui pousse suit sans commenter.",
-    suite: "Ces rôles ne sont pas des personnalités. Ce sont des positions, et une position, ça se change.",
-    cta: "Parler à Martine →"
-  },
-  urgence: {
-    nom: "L'urgence permanente",
-    resume: "Votre couple attend que ça se calme. Ça fait des années.",
-    corps: [
-      "Il y a toujours une raison de repousser. Un contrat à finir, une période creuse à traverser, un mois plus tranquille qui s'en vient. Vous vous êtes dit « après ça, on prend du temps », et vous vous le dites encore.",
-      "Ce n'est pas de la négligence. C'est une dépendance à la montée d'adrénaline que crée l'entreprise, et à côté de laquelle une soirée calme paraît vide. Votre couple n'est pas en compétition avec votre business. Il est en compétition avec l'intensité."
-    ],
-    geste: "Bloquez deux heures au calendrier, cette semaine, comme un rendez-vous client. Traitez-le comme un rendez-vous client : on ne l'annule pas.",
-    suite: "L'accalmie ne viendra pas. Elle se décide, et elle se protège.",
-    cta: "Parler à Martine →"
-  }
-};
+/* --- Le lien du bouton final : le formulaire de contact de Martine. --- */
+const LIEN_MARTINE = "https://ghl.ax-one.ca/widget/form/FtNUuV5x5Siqg6Yu1QWQ";
 
-/* --- Les questions. Chaque réponse pointe vers un profil. --- */
-const QUESTIONS = [
-  {
-    texte: "Votre dernière vraie conversation à deux portait sur quoi ?",
-    reponses: [
-      { texte: "Un dossier, un client, une décision d'affaires", profil: "associes" },
-      { texte: "L'organisation de la semaine, la logistique", profil: "paralleles" },
-      { texte: "Un désaccord sur un risque à prendre ou pas", profil: "moteur" },
-      { texte: "Honnêtement, je ne m'en souviens pas", profil: "urgence" }
-    ]
-  },
-  {
-    texte: "Quand une soirée se libère sans rien de prévu, il se passe quoi ?",
-    reponses: [
-      { texte: "On en profite pour avancer sur l'entreprise", profil: "associes" },
-      { texte: "Chacun fait ses affaires de son bord", profil: "paralleles" },
-      { texte: "L'un veut sortir, l'autre veut décrocher", profil: "moteur" },
-      { texte: "Une soirée libre, ça n'arrive plus vraiment", profil: "urgence" }
-    ]
-  },
-  {
-    texte: "Comment les décisions importantes se prennent chez vous ?",
-    reponses: [
-      { texte: "Efficacement, on est alignés et ça va vite", profil: "associes" },
-      { texte: "Chacun décide dans sa zone, on ne se mêle pas", profil: "paralleles" },
-      { texte: "Ça finit souvent par une négociation tendue", profil: "moteur" },
-      { texte: "Dans l'urgence, quand on n'a plus le choix", profil: "urgence" }
-    ]
-  },
-  {
-    texte: "Si votre conjoint devait nommer ce qui vous manque en ce moment, il dirait quoi ?",
-    reponses: [
-      { texte: "De la légèreté, du plaisir ensemble", profil: "associes" },
-      { texte: "De la proximité, on est devenus des colocataires", profil: "paralleles" },
-      { texte: "De la reconnaissance pour ce que je porte", profil: "moteur" },
-      { texte: "Du temps, tout simplement du temps", profil: "urgence" }
-    ]
-  },
-  {
-    texte: "Vos vacances des deux dernières années, ça ressemblait à quoi ?",
-    reponses: [
-      { texte: "On y va, mais on travaille pareil", profil: "associes" },
-      { texte: "On y va, et on se retrouve chacun dans sa bulle", profil: "paralleles" },
-      { texte: "L'un veut partir loin, l'autre trouve ça déraisonnable", profil: "moteur" },
-      { texte: "On a repoussé, encore", profil: "urgence" }
-    ]
-  },
-  {
-    texte: "Quand l'entreprise va mal, votre couple réagit comment ?",
-    reponses: [
-      { texte: "On se serre les coudes, on redevient une équipe", profil: "associes" },
-      { texte: "Chacun encaisse de son côté, en silence", profil: "paralleles" },
-      { texte: "On se reproche mutuellement d'en être là", profil: "moteur" },
-      { texte: "On accélère, on travaille plus fort", profil: "urgence" }
-    ]
-  },
-  {
-    texte: "Complétez : « Depuis qu'on est en affaires ensemble, on a perdu... »",
-    reponses: [
-      { texte: "Notre spontanéité, tout est planifié", profil: "associes" },
-      { texte: "Notre complicité, on ne se comprend plus pareil", profil: "paralleles" },
-      { texte: "Notre équilibre, il y en a un qui porte plus", profil: "moteur" },
-      { texte: "Notre calme, on vit toujours en mode urgence", profil: "urgence" }
-    ]
-  },
-  {
-    texte: "Qu'est-ce que vous avez déjà essayé pour que ça aille mieux ?",
-    reponses: [
-      { texte: "Se donner des règles : pas de business le soir", profil: "associes" },
-      { texte: "Un voyage, un déménagement, un changement d'environnement", profil: "paralleles" },
-      { texte: "Redéfinir qui fait quoi dans l'entreprise", profil: "moteur" },
-      { texte: "Rien, on attend que ça se calme", profil: "urgence" }
-    ]
-  }
+/* --- L'échelle, commune aux dix énoncés. --- */
+const ECHELLE = [
+  { valeur: 1, texte: "Pas du tout vrai" },
+  { valeur: 2, texte: "Plutôt faux" },
+  { valeur: 3, texte: "Mitigé" },
+  { valeur: 4, texte: "Plutôt vrai" },
+  { valeur: 5, texte: "Tout à fait vrai" }
 ];
 
-/* --- L'avertissement. Cette version est un texte de travail.
-       Martine doit écrire la sienne : c'est sa frontière professionnelle. --- */
-const AVERTISSEMENT =
-  "Ce test est un outil de réflexion, pas un diagnostic. Couple inc. n'est ni de la " +
-  "psychologie ni de la thérapie de couple. Si votre situation implique de la violence, " +
-  "une dépendance ou une détresse importante, parlez-en à un professionnel de la santé.";
+/* --- Les dix énoncés. L'ordre définit l'ordre d'affichage.
+       La clé "dimension" est ce qui relie l'énoncé aux profils. --- */
+const QUESTIONS = [
+  { dimension: "connexion",     titre: "Connexion",                  texte: "Nous prenons régulièrement du temps pour nous retrouver, en dehors du business." },
+  { dimension: "communication", titre: "Communication",              texte: "Nous savons dire à l'autre ce qui ne va pas sans que ça dégénère." },
+  { dimension: "stress",        titre: "Gestion du stress",          texte: "Le stress de l'entreprise ne déborde pas trop sur notre relation." },
+  { dimension: "decisions",     titre: "Décisions",                  texte: "Nous avons une façon claire de prendre les décisions importantes à deux." },
+  { dimension: "vision",        titre: "Vision commune",             texte: "Nous visons la même chose, autant pour le couple que pour l'entreprise." },
+  { dimension: "roles",         titre: "Rôles",                      texte: "Nos rôles respectifs dans l'entreprise sont clairs et acceptés par les deux." },
+  { dimension: "frontieres",    titre: "Frontières couple et business", texte: "Nous arrivons à fermer le bureau et redevenir un couple, pas juste des associés." },
+  { dimension: "conflits",      titre: "Conflits",                   texte: "Nos désaccords business ne se transforment pas en conflits de couple, ni l'inverse." },
+  { dimension: "temps",         titre: "Temps de qualité",           texte: "Nous avons du temps de qualité ensemble, sans parler business ni logistique." },
+  { dimension: "leadership",    titre: "Leadership à deux",          texte: "Nous savons qui décide quoi, sans lutte de pouvoir constante." }
+];
 
+/* --- Les cinq profils. Chacun est associé à trois dimensions.
+       Le profil retenu est celui dont la moyenne des trois est la plus basse. --- */
+const PROFILS = {
+  sous_pression: {
+    nom: "Le couple sous pression",
+    dimensions: ["communication", "stress", "conflits"],
+    resume: "Le stress de l'entreprise ne reste pas au bureau.",
+    corps: [
+      "Il se glisse dans le ton que vous prenez, dans la vitesse à laquelle un désaccord business devient une tension de couple.",
+      "Ce n'est pas un problème d'amour, c'est un problème de soupape. Rien ne vient absorber la pression avant qu'elle ne retombe sur votre relation."
+    ],
+    geste: "Cette semaine, quand le ton monte, l'un de vous deux nomme la chose à voix haute : « là, on parle business ou on parle de nous ? » Rien d'autre. La question suffit à casser l'élan.",
+    suite: "La pression ne baissera pas d'elle-même. Ce qui peut changer, c'est ce qu'elle traverse avant de vous atteindre."
+  },
+  desaligne: {
+    nom: "Le couple désaligné",
+    dimensions: ["vision", "decisions", "leadership"],
+    resume: "Vous avancez, mais pas forcément dans la même direction.",
+    corps: [
+      "Les décisions se prennent chacun de son côté, ou au contraire trop lentement parce que personne ne sait qui tranche.",
+      "Ce n'est ni un manque d'amour ni de compétence. C'est un manque de vision partagée et de mécanique de décision claire."
+    ],
+    geste: "Un seul sujet à trancher cette semaine, et vous décidez d'avance qui aura le dernier mot dessus. Une décision, une personne désignée. Vous allez voir tout de suite ce que ça change.",
+    suite: "Deux trajectoires parallèles ne se croisent jamais par hasard. Il faut décider de tourner."
+  },
+  fusionne: {
+    nom: "Le couple fusionné avec l'entreprise",
+    dimensions: ["frontieres", "roles", "temps"],
+    resume: "Il n'y a presque plus de frontière entre vous-associés et vous-couple.",
+    corps: [
+      "Vous parlez business au lit, en voiture, en soupant. Vos rôles se chevauchent et votre temps ensemble est presque toujours du travail déguisé.",
+      "Le risque est simple à nommer : que le couple devienne une fonction de l'entreprise, plutôt que l'inverse."
+    ],
+    geste: "Choisissez un moment récurrent de votre semaine, un repas, un trajet, le coucher, et déclarez-le hors business. Un seul. Celui que vous allez protéger le plus facilement.",
+    suite: "Une entreprise qui prend toute la place ne la rend jamais d'elle-même. Il faut aller la reprendre."
+  },
+  surcharge: {
+    nom: "Le couple en surcharge",
+    dimensions: ["stress", "temps", "connexion"],
+    resume: "Vous tenez, mais à bout de souffle.",
+    corps: [
+      "Entre les échéances, les décisions à prendre à deux casquettes et le reste de la vie, il ne reste presque plus d'espace pour vous retrouver sans agenda.",
+      "Le système fonctionne, mais il tourne en surrégime. Et un système en surrégime finit toujours par lâcher quelque chose."
+    ],
+    geste: "Bloquez deux heures au calendrier cette semaine, comme un rendez-vous client. Traitez-les comme un rendez-vous client : on ne les annule pas.",
+    suite: "Un système en surrégime ne ralentit pas tout seul. Ou bien on le ralentit, ou bien il casse."
+  },
+  solide: {
+    nom: "Le couple solide, sans système",
+    dimensions: ["roles", "decisions", "leadership"],
+    resume: "Votre relation tient bien la route. C'est la structure qui manque.",
+    corps: [
+      "Vous communiquez, la connexion est là. Mais côté entreprise, tout repose encore sur l'intuition et la bonne volonté plutôt que sur un système clair de rôles, de décisions et de leadership à deux.",
+      "Ce qui vous a portés jusqu'ici, l'instinct, ne suffira pas pour la suite, la croissance."
+    ],
+    geste: "Écrivez chacun de votre côté la liste des décisions que vous croyez être les vôtres. Comparez les deux listes. C'est dans les écarts que se cache le flou.",
+    suite: "L'instinct vous a menés jusqu'ici. Il ne vous mènera pas au palier suivant."
+  }
+};
+
+/* --- Règles de calcul ajoutées à la grille de Martine.
+       Voir la note en bas de fichier pour le raisonnement. --- */
+
+// Le profil « solide » affirme que la relation va bien. On ne le donne donc
+// que si la moyenne générale atteint ce seuil. Sinon, on passe au suivant.
+const SEUIL_SOLIDE = 3.5;
+
+// En cas d'égalité résiduelle, ordre de priorité par urgence de la dynamique.
+const PRIORITE = ["sous_pression", "fusionne", "surcharge", "desaligne", "solide"];
+
+/* --- L'avertissement. Texte de travail. Martine doit écrire le sien :
+       c'est sa frontière professionnelle, pas la nôtre. --- */
+const AVERTISSEMENT =
+  "Ce diagnostic est un outil de réflexion, pas une évaluation clinique. Couple inc. " +
+  "n'est ni de la psychologie ni de la thérapie de couple. Si votre situation implique " +
+  "de la violence, une dépendance ou une détresse importante, parlez-en à un " +
+  "professionnel de la santé.";
 
 /* ============================================================
    MOTEUR — normalement, rien à modifier ici.
    ============================================================ */
+
+/* --- Chargement du suivi. Rien n'est chargé si les deux champs sont vides. --- */
+window.dataLayer = window.dataLayer || [];
+
+(function(){
+  if (ANALYTICS.gtm){
+    window.dataLayer.push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var j = document.createElement("script");
+    j.async = true;
+    j.src = "https://www.googletagmanager.com/gtm.js?id=" + ANALYTICS.gtm;
+    document.head.appendChild(j);
+  }
+  if (ANALYTICS.ga4){
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + ANALYTICS.ga4;
+    document.head.appendChild(s);
+    window.gtag = function(){ window.dataLayer.push(arguments); };
+    gtag("js", new Date());
+    gtag("config", ANALYTICS.ga4, { send_page_view: true });
+  }
+})();
+
+function suivre(nom, params){
+  var p = params || {};
+  if (ANALYTICS.gtm){
+    var charge = { event: nom };
+    for (var k in p) charge[k] = p[k];
+    window.dataLayer.push(charge);
+  }
+  if (ANALYTICS.ga4 && window.gtag) gtag("event", nom, p);
+  if (ANALYTICS.console) console.log("[suivi]", nom, p);
+}
 
 const ecrans = {
   accueil:   document.getElementById("ecran-accueil"),
@@ -468,7 +474,7 @@ const ecrans = {
 };
 
 let index = 0;
-const choix = new Array(QUESTIONS.length).fill(null);
+const notes = new Array(QUESTIONS.length).fill(null);   // valeurs de 1 à 5
 
 function afficher(nom){
   Object.values(ecrans).forEach(e => e.classList.remove("actif"));
@@ -478,9 +484,10 @@ function afficher(nom){
 
 function rendreQuestion(){
   const q = QUESTIONS[index];
+  document.getElementById("dimension-question").textContent = q.titre;
   document.getElementById("texte-question").textContent = q.texte;
   document.getElementById("etiquette-progression").textContent =
-    "Question " + (index + 1) + " sur " + QUESTIONS.length;
+    "Énoncé " + (index + 1) + " sur " + QUESTIONS.length;
 
   const pct = Math.round((index / QUESTIONS.length) * 100);
   document.getElementById("pourcentage").textContent = pct + " %";
@@ -488,41 +495,59 @@ function rendreQuestion(){
 
   const liste = document.getElementById("liste-reponses");
   liste.innerHTML = "";
-  q.reponses.forEach((r, i) => {
+  ECHELLE.forEach(e => {
     const b = document.createElement("button");
-    b.className = "reponse" + (choix[index] === i ? " choisie" : "");
-    b.innerHTML = '<span class="puce"></span><span>' + r.texte + '</span>';
-    b.addEventListener("click", () => repondre(i));
+    b.className = "reponse" + (notes[index] === e.valeur ? " choisie" : "");
+    b.innerHTML = '<span class="puce"></span><span>' + e.texte + '</span>';
+    b.addEventListener("click", () => repondre(e.valeur));
     liste.appendChild(b);
   });
 
   document.getElementById("btn-retour").style.visibility = index === 0 ? "hidden" : "visible";
 }
 
-function repondre(i){
-  choix[index] = i;
-  rendreQuestion();
-  setTimeout(() => {
-    if (index < QUESTIONS.length - 1){
-      index++;
-      rendreQuestion();
-    } else {
-      document.getElementById("jauge").style.width = "100%";
-      afficher("courriel");
-    }
-  }, 260);
-}
-
+/* --- Le calcul.
+   1. Moyenne des trois dimensions de chaque profil.
+   2. Le profil retenu est celui dont la moyenne est la plus basse.
+   3. En cas d'égalité : le profil qui contient la dimension la plus faible
+      du diagnostic au complet. Si l'égalité persiste, l'ordre de PRIORITE.
+   4. Le profil « solide » exige en plus une moyenne générale d'au moins
+      SEUIL_SOLIDE, parce que son texte affirme que la relation va bien.
+      Sinon on retient le profil suivant.                             --- */
 function calculerProfil(){
-  const points = {};
-  Object.keys(PROFILS).forEach(k => points[k] = 0);
-  choix.forEach((c, i) => {
-    if (c === null) return;
-    points[QUESTIONS[i].reponses[c].profil]++;
+  const parDimension = {};
+  QUESTIONS.forEach((q, i) => { parDimension[q.dimension] = notes[i]; });
+
+  const moyennes = {};
+  Object.keys(PROFILS).forEach(cle => {
+    const dims = PROFILS[cle].dimensions;
+    let somme = 0;
+    dims.forEach(d => somme += parDimension[d]);
+    moyennes[cle] = somme / dims.length;
   });
-  // En cas d'égalité, la première réponse donnée départage.
-  let gagnant = Object.keys(points)[0];
-  Object.keys(points).forEach(k => { if (points[k] > points[gagnant]) gagnant = k; });
+
+  const moyenneGenerale = notes.reduce((a, b) => a + b, 0) / notes.length;
+
+  function choisir(exclus){
+    const dispo = Object.keys(PROFILS).filter(c => exclus.indexOf(c) === -1);
+    const plusBasse = Math.min.apply(null, dispo.map(c => moyennes[c]));
+    let candidats = dispo.filter(c => moyennes[c] === plusBasse);
+
+    if (candidats.length > 1){
+      const pire = Math.min.apply(null, Object.values(parDimension));
+      const dimsPires = Object.keys(parDimension).filter(d => parDimension[d] === pire);
+      const avecPire = candidats.filter(c =>
+        PROFILS[c].dimensions.some(d => dimsPires.indexOf(d) !== -1));
+      if (avecPire.length >= 1) candidats = avecPire;
+      candidats.sort((a, b) => PRIORITE.indexOf(a) - PRIORITE.indexOf(b));
+    }
+    return candidats[0];
+  }
+
+  let gagnant = choisir([]);
+  if (gagnant === "solide" && moyenneGenerale < SEUIL_SOLIDE){
+    gagnant = choisir(["solide"]);
+  }
   return gagnant;
 }
 
@@ -534,25 +559,67 @@ function rendreResultat(cle){
     p.corps.map(t => "<p>" + t + "</p>").join("");
   document.getElementById("geste-profil").textContent = p.geste;
   document.getElementById("suite-profil").textContent = p.suite;
-  document.getElementById("btn-cta").textContent = p.cta;
+  document.getElementById("btn-cta").href = LIEN_MARTINE;
   document.getElementById("avertissement").textContent = AVERTISSEMENT;
   afficher("resultat");
 }
 
+/* --- Navigation et historique du navigateur ---
+   Chaque étape devient une entrée d'historique, donc le bouton Précédent
+   du navigateur recule d'un énoncé au lieu de quitter la page. --- */
+
+function rendreEtat(etat){
+  if (!etat || etat.v === "accueil"){ afficher("accueil"); return; }
+  if (etat.v === "question"){ index = etat.i; rendreQuestion(); afficher("questions"); return; }
+  if (etat.v === "courriel"){ document.getElementById("jauge").style.width = "100%"; afficher("courriel"); return; }
+  if (etat.v === "resultat"){ rendreResultat(etat.p); return; }
+}
+
+function aller(etat){
+  history.pushState(etat, "");
+  rendreEtat(etat);
+}
+
+window.addEventListener("popstate", function(e){ rendreEtat(e.state); });
+history.replaceState({ v: "accueil" }, "");
+
+/* --- Actions --- */
+
 document.getElementById("btn-demarrer").addEventListener("click", () => {
-  afficher("questions");
-  rendreQuestion();
+  suivre("quiz_demarrage", { quiz: ANALYTICS.nom });
+  aller({ v: "question", i: 0 });
 });
 
-document.getElementById("btn-retour").addEventListener("click", () => {
-  if (index > 0){ index--; rendreQuestion(); }
-});
+document.getElementById("btn-retour").addEventListener("click", () => { history.back(); });
+
+function repondre(valeur){
+  notes[index] = valeur;
+  const numero = index + 1;
+  const dim = QUESTIONS[index].dimension;
+  rendreQuestion();
+  suivre("quiz_question", {
+    quiz: ANALYTICS.nom,
+    numero_question: numero,
+    total_questions: QUESTIONS.length,
+    dimension: dim,
+    note: valeur
+  });
+  setTimeout(() => {
+    if (index < QUESTIONS.length - 1){
+      aller({ v: "question", i: index + 1 });
+    } else {
+      suivre("quiz_ecran_courriel", { quiz: ANALYTICS.nom });
+      aller({ v: "courriel" });
+    }
+  }, 260);
+}
 
 document.getElementById("btn-recommencer").addEventListener("click", () => {
   index = 0;
-  choix.fill(null);
+  notes.fill(null);
   document.getElementById("formulaire").reset();
-  afficher("accueil");
+  suivre("quiz_recommence", { quiz: ANALYTICS.nom });
+  aller({ v: "accueil" });
 });
 
 document.getElementById("formulaire").addEventListener("submit", async (e) => {
@@ -565,16 +632,11 @@ document.getElementById("formulaire").addEventListener("submit", async (e) => {
 
   err.classList.remove("on");
 
-  if (!prenom){ err.textContent = "Entrez votre prénom."; err.classList.add("on"); return; }
+  if (!prenom){ err.textContent = "Entrez vos prénoms."; err.classList.add("on"); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(courriel)){
     err.textContent = "Cette adresse courriel ne semble pas valide.";
     err.classList.add("on"); return;
   }
-  if (!consent){
-    err.textContent = "Cochez la case pour recevoir votre résultat par courriel.";
-    err.classList.add("on"); return;
-  }
-
   const profil = calculerProfil();
   bouton.disabled = true;
   bouton.textContent = "Envoi en cours...";
@@ -589,7 +651,8 @@ document.getElementById("formulaire").addEventListener("submit", async (e) => {
           email: courriel,
           profil: profil,
           liste: ENVOI.listes[profil],
-          consentement: true,
+          notes: notes,
+          consentement: consent,
           horodatage: new Date().toISOString()
         })
       });
@@ -600,40 +663,85 @@ document.getElementById("formulaire").addEventListener("submit", async (e) => {
     }
   } else {
     console.log("MODE PROTOTYPE — aucun envoi réel.",
-      { prenom: prenom, courriel: courriel, profil: profil });
+      { prenom: prenom, courriel: courriel, profil: profil, consentement: consent, notes: notes });
   }
 
+  suivre("quiz_lead", { quiz: ANALYTICS.nom, profil: profil, consentement: consent });
+  suivre("quiz_resultat", { quiz: ANALYTICS.nom, profil: profil });
+
   bouton.disabled = false;
-  bouton.textContent = "Voir mon résultat →";
-  rendreResultat(profil);
+  bouton.textContent = "Voir notre diagnostic →";
+  aller({ v: "resultat", p: profil });
+});
+
+document.getElementById("btn-cta").addEventListener("click", () => {
+  suivre("quiz_cta", { quiz: ANALYTICS.nom });
 });
 </script>
 
 <!--
 ================================================================
-BRANCHER L'ENVOI (à faire quand le vrai contenu sera prêt)
+NOTES
 ================================================================
 
-1. Créer un compte Brevo. Créer une liste par profil de résultat.
-2. Créer une automatisation par liste : déclencheur « contact ajouté
-   à la liste », action « envoyer le courriel du profil ».
-3. Créer un point de collecte qui reçoit le POST du formulaire et
-   ajoute le contact à la bonne liste. Deux façons :
-   a) Un Cloudflare Worker de quinze lignes qui appelle l'API Brevo
-      avec la clé API gardée côté serveur. C'est la bonne façon.
-   b) Un scénario Make ou Zapier avec un webhook. Plus rapide, moins
-      propre, suffisant pour une campagne temporaire.
-4. Mettre ENVOI.actif à true, remplir ENVOI.url et les identifiants
-   de liste.
+LA LOGIQUE DE CALCUL
 
-NE JAMAIS mettre une clé API Brevo dans ce fichier. Il est public.
+La grille de Martine : cinq profils, trois dimensions chacun, on retient le
+profil dont la moyenne est la plus basse.
 
-À VÉRIFIER AVANT LA MISE EN LIGNE
-- Retirer le badge « Prototype » en haut du body
-- Brancher le vrai lien de la politique de confidentialité
-- Ajouter le nom et l'adresse postale de l'entreprise dans les
-  courriels envoyés (obligation LCAP)
-- Faire écrire l'avertissement par Martine
+Deux règles ont été ajoutées après simulation des 9 765 625 parcours possibles.
+
+1. LE DÉPARTAGE. Trois énoncés notés de 1 à 5 donnent une somme entre 3 et 15,
+   soit treize valeurs pour cinq profils. Les égalités sont donc fréquentes :
+   25 % de tous les parcours, et près de 50 % chez les couples qui répondent de
+   façon homogène, ce qui est le comportement réel. Sans règle de départage, une
+   personne sur deux recevrait un résultat arbitraire.
+   Règle retenue : le profil qui contient la dimension la plus faible du
+   diagnostic. Si l'égalité persiste, l'ordre de PRIORITE.
+
+2. LE GARDE-FOU SUR « SOLIDE ». Ce profil affirme « votre relation tient bien la
+   route ». Or la règle de la moyenne la plus basse est purement relative : sans
+   condition, ce texte sortait dans 9,8 % des cas y compris chez des couples dont
+   la moyenne générale était sous 2,5 sur 5. Un couple en détresse se serait fait
+   dire que tout va bien.
+   Règle retenue : moyenne générale d'au moins SEUIL_SOLIDE, sinon on retient le
+   profil suivant. Après correctif : 0 % chez les couples en détresse.
+
+LE CONSENTEMENT EST FACULTATIF
+
+Depuis que le résultat s'affiche à l'écran au lieu d'être envoyé par courriel, la
+case de consentement ne bloque plus rien. La personne voit son diagnostic qu'elle
+coche ou non. Le prénom et le courriel restent obligatoires.
+
+Raison : conditionner l'accès à un résultat déjà calculé à un consentement
+marketing obligatoire se défend mal sous la Loi 25. La case reste présentée
+normalement, sans mention « facultatif ».
+
+Le champ `consentement` envoyé à Go High Level porte l'état réel de la case.
+IMPORTANT : ce champ doit réellement contrôler qui reçoit des communications
+commerciales. Un contact avec consentement = false ne doit jamais entrer dans une
+séquence marketing. Sinon on aura simplement produit la preuve écrite qu'il avait
+refusé.
+
+BRANCHER GO HIGH LEVEL
+
+Remplir ENVOI.url avec le point de collecte, mettre ENVOI.actif à true, et
+renseigner LIEN_MARTINE avec l'adresse de son formulaire de contact.
+Le champ `notes` envoie les dix réponses brutes, utile pour segmenter plus tard.
+NE JAMAIS mettre une clé d'API dans ce fichier, il est public.
+
+RESTE À FAIRE AVANT LA MISE EN LIGNE
+- Faire écrire l'avertissement par Martine (constante AVERTISSEMENT plus haut).
+  Le texte actuel est une version de travail écrite par Claude. C'est la frontière
+  professionnelle de Martine, elle doit la formuler elle-même.
+- Brancher ENVOI.url sur Go High Level et mettre ENVOI.actif à true
+- Vérifier dans GHL que les contacts avec consentement = false n'entrent dans
+  aucune séquence commerciale
+
+FAIT
+- Lien de la politique : https://ax-one.ca/politique-de-confidentialite/
+- Bouton final relié au formulaire de Martine
+- Badge « Prototype » retiré
 ================================================================
 -->
 </body>
